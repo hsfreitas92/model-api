@@ -1,11 +1,12 @@
 from flask import jsonify, request
 from app.routes import users_bp
 from app.models import User
-from app import db
-
+from app import create_db_connection
+from mysql.connector import IntegrityError
 
 @users_bp.route('', methods=['GET'])
 def get_users():
+    db = create_db_connection()
     cursor = db.cursor()
     cursor.execute("SELECT * FROM users")
     result = cursor.fetchall()
@@ -34,18 +35,22 @@ def create_user():
     name = data.get('name')
     password = data.get('password')
     email = data.get('email')
+    db = create_db_connection()
+    
+    try:
+        cursor = db.cursor()
+        cursor.execute(
+            "INSERT INTO users (name, password, email) VALUES (%s, %s, %s)", (name, password, email))
+        db.commit()
+        cursor.close()
 
-    cursor = db.cursor()
-    cursor.execute(
-        "INSERT INTO users (name, password, email) VALUES (%s, %s, %s)", (name, password, email))
-    db.commit()
-    cursor.close()
-
-    return jsonify({'message': 'User created successfully'}), 201
-
+        return jsonify({'message': 'User created successfully'}), 201
+    except IntegrityError:
+        return jsonify({'message': 'User already exists'}), 409
 
 @users_bp.route('/<int:user_id>', methods=['GET'])
 def get_user(user_id):
+    db = create_db_connection()
     cursor = db.cursor()
     cursor.execute("SELECT * FROM users WHERE id = %s", (user_id,))
     result = cursor.fetchone()
