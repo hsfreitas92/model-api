@@ -6,29 +6,22 @@
 - MySQL (MariaDB 10.4)
 
 ## Instalação
-
-1. Clone o repositório:
-`git clone https://github.com/hsfreitas92/model-api.git`
-
-2. Acesse a pasta do projeto:
-`cd seu-projeto`
-
-2. Config Ambiente:
+1. Config Ambiente:
 - Crie e ative um ambiente virtual (opcional):
   `python -m venv venv`
   `source venv/bin/activate` ou `.\venv\Scripts\Activate.ps1`
 - Configure as informações de ambiente de dev ou prod no arquivo `wsgi.py`.
 
-4. Instale as dependências:
+2. Instale as dependências:
 `pip install -r requirements.txt`
 
-5. Configuração do Banco de Dados:
+3. Configuração do Banco de Dados:
 
 - Configure as informações do banco de dados no arquivo `config.py` localizado na raiz do projeto.
 - Certifique-se de que o MySQL esteja configurado corretamente e acessível.
 - Deve ser apontado para o banco atual(teste local) da nortech, criado pela aplicacao via migration.
 
-6. Execute a aplicação:
+4. Execute a aplicação:
 `set FLASK_APP=app`
 `flask run`
 
