@@ -9,7 +9,7 @@
 1. Config Ambiente:
 - Crie e ative um ambiente virtual (opcional):
   `python -m venv venv`
-  `source venv/bin/activate` ou `.\venv\Scripts\Activate.ps1`
+  `.\venv\Scripts\Activate.ps1`
 - Configure as informações de ambiente de dev ou prod no arquivo `wsgi.py`.
 
 2. Instale as dependências:
